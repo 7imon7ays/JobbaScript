@@ -1,5 +1,4 @@
 function JobApplication(jobberator, applicationParams) {
-  Logger.log(jobberator);
   this.jobberator = jobberator;
   this.companyName = applicationParams[COLUMNMAP['companyName']];
   this.contactEmail = applicationParams[COLUMNMAP['contactEmail']];
