@@ -7,13 +7,16 @@ function ApplicationEmail(contactEmail, jobTitle, companyCity, companyName, comp
 }
 
 ApplicationEmail.prototype.initCoverLetter = function (jobberator) {
-  var coverTemplate = DocsList.getFileById(jobberator.coverTemplateGUID), // Open Document as File
-      coverLetterFile = coverTemplate.makeCopy(this.companyName), // to make a copy of it.
+  // Open Document as File to make a copy of it.
+  var coverTemplate = DocsList.getFileById(jobberator.coverTemplateGUID),
+      coverLetterFile = coverTemplate.makeCopy(this.companyName),
       coverLetterFolderID = jobberator.getFolderGUID(),
       folder = DocsList.getFolderById(coverLetterFolderID);
 
   coverLetterFile.addToFolder(folder);
-  this.coverLetter = DocumentApp.openById(coverLetterFile.getId()); // Memo-ize as Document to use text for email
+  coverLetterFile.removeFromFolder(DocsList.getRootFolder());
+  // Memo-ize as Document for use in email body.
+  this.coverLetter = DocumentApp.openById(coverLetterFile.getId());
 }
 
 ApplicationEmail.prototype.populateCoverLetter = function() {
