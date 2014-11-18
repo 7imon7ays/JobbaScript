@@ -1,21 +1,47 @@
-JobaScripts
-===========
+# JobbaScript
 
-Some Google Drive scripts which greatly reduce the pain of the job hunt.
+A Google Drive script to automate the job hunt. Build a spreadsheet with
+companies you want to apply to and the relevant info for each. Then let this
+script fire an email to each company with a customized cover letter and your
+resume as an attachment. Google allows you to set the interval between each email.
+The generated cover letters will be saved in a dedicated folder.
 
-Setup
-===========
-1.  Create a directory in Google Drive for this project.
-2.  Create a spreadsheet with columns roughly corresponding to what is being done in the rowHashify function.
-3.  Create a generic cover letter in a google doc.  Take note of the way interpolation is performed in *createEmailBody()*
-4.  Convert the google doc to html: File --> Download as --> HTML.
-5.  Convert that html file into one that uses all inline styling (gmail strips out style tags).  Use <http://premailer.dialect.ca/>.
-6.  In the spreadsheet created in step 2: Tools --> Script Editor --> New Project.
-7.  Copy and paste the contents if the .gs files in this repo to the same relative paths (painful, I know see if you also find this painful. <http://stackoverflow.com/a/13427099/1730388>).
-8.  Upload a pdf of your resume to Google Drive.
-9.  Change the global variables in helpers.gs to the correct values to refer to your file.
-10. Add some test data to the spreadsheet.  **Start out by making yourself the recipient.**
-11. Back in the code editor, Run --> bulkSend.  You should get an email with your coverletter and resume attached!
-12. When testing is complete and everything has been thoroughly proofread, click the clock icon to create an hourly trigger for bulkSend.  Now you can focus on finding job postings and customizing your cover letter.
+## Setup
 
-Use at your own discretion!!
+0. Upload "data/master.xlsx" to a single Google spreadsheet. Make sure the
+  companies table is in the "Companies" sheet and the configuration table is in
+  the "Config" spreadsheet.
+0. Make sure cell A2 in “Config” is blank. The script fills it when it creates
+  the folder where your populated cover letters will be saved.
+0. Fill cells B2 and C2 with the Global Unique IDs of your resume and cover letter
+  template. Read this [blog post] for instructions on finding a file's global
+  unique ID.
+0. Upload your resume as a PDF and write your cover letter template as a Google doc.
+  * Use { date }, { companyName } and { companyBlurb } as placeholders for the
+    script to populate when generating cover letters.
+0. Copy the scripts in the .gs files stored on this repo to a Google script
+  associated with the Master spreadsheet.
+    * From the spreadsheet, click "Tools" > "Script Editor" > "Blank Project".
+    * Create one file ("File" > "New" > "Script file") for each .gs file in this
+      repo and copy over the code. (The names don't matter but we'll refer back
+      to 'jobberator.gs' at the end.)
+0. For the test run, put your own email address in cell B2 in the “Companies”
+  sheet and make sure the "applyByEmail" column is set to TRUE.
+0. To fire it up, open the spreadsheet, click “Tools” > “Script Editor”, then
+  “jobberator.gs”, then “Run” > “main”.
+0. Once you've tested it, fill one row in the "Companies" sheet for each company
+  you're applying to.
+0. To set the script to run every half hour, click the clock icon and set “main”
+  to run every 30 minutes.
+
+## Credit
+
+Built in collaboration with [Joe Combs][joe combs].
+
+[joe combs]: https://twitter.com/josephcombs
+[blog post]: http://www.alicekeeler.com/teachertech/2013/08/03/google-docs-unique-id/
+
+## Warning
+
+This fires live emails from your Google Mail account. Use at your own risk!
+
