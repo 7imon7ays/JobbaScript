@@ -81,9 +81,10 @@ Jobberator.prototype.getFolderGUID = function() {
 Jobberator.prototype.recordEmailSent = function(companyIndex) {
   var rowIdx = companyIndex + 1,
     emailWasSentColumn = COLUMNLETTERS[COLUMNMAP['emailWasSent']],
-    cell = SpreadsheetApp.getActiveSheet().getRange(emailWasSentColumn + rowIdx);
+    cell = SpreadsheetApp.getActiveSheet().getRange(emailWasSentColumn + rowIdx),
+    date = createPrettyDate();
   
-  cell.setValue(true);
+  cell.setValue(date);
 }
 
 createPrettyDate = function() {
